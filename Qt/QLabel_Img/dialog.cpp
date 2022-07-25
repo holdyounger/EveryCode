@@ -19,3 +19,13 @@ Dialog::~Dialog()
 {
     delete ui;
 }
+
+void Dialog::finish(QWidget* mainWin)
+{
+    if (mainWin) {
+        if (!mainWin->windowHandle())
+            mainWin->createWinId();
+    //	QTest::qWaitForWindowExposed(mainWin->windowHandle());
+    }
+    close();
+}

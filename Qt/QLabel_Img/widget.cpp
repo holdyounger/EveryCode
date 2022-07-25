@@ -48,7 +48,7 @@ Widget::Widget(QWidget *parent)
 
 
     QPixmap img(":/Win11");
-    movie = new QMovie(":/test.gif");
+    movie = new QMovie(":/gif_loding.gif");
 
     ui->label->setMovie(movie);
     movie->start();

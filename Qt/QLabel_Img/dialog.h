@@ -1,4 +1,4 @@
-#ifndef DIALOG_H
+﻿#ifndef DIALOG_H
 #define DIALOG_H
 
 #include <QDialog>
@@ -15,6 +15,7 @@ public:
     explicit Dialog(QWidget *parent = nullptr);
     ~Dialog();
 
+    void finish(QWidget *mainWin);
 private:
     Ui::Dialog *ui;
 };

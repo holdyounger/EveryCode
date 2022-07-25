@@ -17,18 +17,16 @@ qFloatWidget::qFloatWidget(QWidget *parent) :
     ui(new Ui::qFloatWidget)
 {
     ui->setupUi(this);
-    setWindowFlags(Qt::FramelessWindowHint);
-    setAttribute(Qt::WA_TranslucentBackground);
-    setAttribute(Qt::WA_NoSystemBackground);
-
     //设置具体阴影
-    QGraphicsDropShadowEffect *shadow_effect = new QGraphicsDropShadowEffect(this);
+    QGraphicsDropShadowEffect *shadow_effect = new QGraphicsDropShadowEffect();
     shadow_effect->setOffset(0, 0);
     shadow_effect->setColor(QColor(0, 133, 255));
-    shadow_effect->setBlurRadius(5);
+    shadow_effect->setBlurRadius(8);
     this->setGraphicsEffect(shadow_effect);
 
 
+    setWindowFlags(this->windowFlags() | Qt::FramelessWindowHint);
+    setAttribute(Qt::WA_TranslucentBackground,true);
 }
 
 qFloatWidget::~qFloatWidget()
@@ -152,6 +150,5 @@ void qFloatWidget::paintEvent(QPaintEvent *)
     drawPath.addRoundedRect(myRect, BORDER_RADIUS, BORDER_RADIUS);
     drawPath.addPolygon(trianglePolygon);
     painter.drawPath(drawPath);
-
 
 }

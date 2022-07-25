@@ -43,7 +43,7 @@ private:
 private:
     QStringList *List2Print;
 
-    bool eventFilter(QObject *wcg, QEvent *event);//事件过滤
+   // bool eventFilter(QObject *wcg, QEvent *event);//事件过滤
 
 private:
     void QTimerTest();
