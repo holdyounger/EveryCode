@@ -14,7 +14,7 @@
     <ProjectGuid>{9650E2B0-1D53-3403-A2CB-410C40D4FCF9}</ProjectGuid>
     <RootNamespace>sqlitecipher</RootNamespace>
     <Keyword>QtVS_v300</Keyword>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -25,7 +25,7 @@
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <IntermediateDirectory>.obj\release\</IntermediateDirectory>
     <PrimaryOutput>sqlitecipher</PrimaryOutput>
-    <QtInstall>5.9.9</QtInstall>
+    <QtInstall>5.14.0_msvc2017</QtInstall>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <PlatformToolset>v142</PlatformToolset>

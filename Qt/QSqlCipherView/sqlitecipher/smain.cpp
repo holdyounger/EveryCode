@@ -75,7 +75,7 @@ QSqlDriver* SqliteCipherDriverPlugin::create(const QString &name)
         return driver;
     }
     return 0;
-}
+} 
 
 #if (QT_VERSION < 0x050000)
 QStringList SqliteCipherDriverPlugin::keys() const
@@ -91,4 +91,4 @@ Q_EXPORT_PLUGIN2(qsqlite, SqliteCipherDriverPlugin)
 
 QT_END_NAMESPACE
 
-#include "moc/moc_smain.cpp"
+// #include "moc/moc_smain.cpp"
