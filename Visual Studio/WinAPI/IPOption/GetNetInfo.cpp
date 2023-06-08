@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include <winsock2.h>
 #include <iphlpapi.h>
 #include <stdio.h>
@@ -10,7 +9,7 @@
 
 /* Note: could also use malloc() and free() */
 
-int __cdecl main()
+int GetNetInfo()
 {
 
 	/* Declare and initialize variables */

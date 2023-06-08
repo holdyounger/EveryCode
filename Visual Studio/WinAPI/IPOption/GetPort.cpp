@@ -1,13 +1,7 @@
-// GetPort.cpp : 定义控制台应用程序的入口点。
-//
-
-#include "stdafx.h"
-
 // getPort.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。
 //
 
-#include <iostream>
-// Need to link with Iphlpapi.lib and Ws2_32.lib
+#include "define.h"
 #include <winsock2.h>
 #include <ws2tcpip.h>
 #include <iphlpapi.h>
@@ -29,7 +23,7 @@ using namespace std;
 /* Note: could also use malloc() and free() */
 vector<DWORD> g_Ports;
 
-int main()
+int GetPort()
 {
 
 	int iRet = 0;
@@ -76,7 +70,6 @@ _END_:
 	int ii = 0;
 	bool flag = false;
 
-	cout << "num of all ports" << g_Ports.size() << endl;
+	cout << "num of all ports:" << g_Ports.size() << endl;
 	return 0;
 }
-

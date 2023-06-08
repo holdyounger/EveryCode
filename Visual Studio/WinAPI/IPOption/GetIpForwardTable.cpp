@@ -1,11 +1,11 @@
 // Need to link with Ws2_32.lib and Iphlpapi.lib
+#include "define.h"
+
 #include <winsock2.h>
 #include <ws2tcpip.h>
 #include <iphlpapi.h>
 #include <stdio.h>
 #include <WS2tcpip.h>
-#include <iostream>
-using namespace std;
 #pragma comment(lib, "iphlpapi.lib")
 #pragma comment(lib, "ws2_32.lib")
 #pragma warning(disable:4996)
@@ -15,11 +15,8 @@ using namespace std;
 
 /* Note: could also use malloc() and free() */
 
-int main()
+int GetIpForwardTableTest()
 {
-
-	// Declare and initialize variables.
-
 	/* variables used for GetIfForwardTable */
 	PMIB_IPFORWARDTABLE pIpForwardTable;
 	DWORD dwSize = 0;

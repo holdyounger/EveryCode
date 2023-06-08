@@ -1,6 +1,3 @@
-// WaitForSingleObject.cpp : 定义控制台应用程序的入口点。
-//
-#include "stdafx.h"
 #include <iostream>
 #include <windows.h>
 using namespace std;
@@ -69,6 +66,7 @@ DWORD WINAPI MyThreadProc2(PVOID pParam)
 	}
 
 	//SetEvent(g_hEvent); // 释放信号
+
 	cout << "MyThreadProc2 >>> send g_hEvent signal" << endl;
 	SetEvent(g_hEvent);
 	cout << "MyThreadProc2 leave\n----------------------" << endl;

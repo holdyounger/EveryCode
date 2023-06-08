@@ -10,7 +10,7 @@
 #include <lm.h>
 #include <sddl.h>               /* for ConvertSidToStringSid function */
 
-int wmain(int argc, wchar_t * argv[])
+int main(int argc, wchar_t * argv[])
 {
 	DWORD dwLevel = 0;
 
@@ -44,10 +44,11 @@ int wmain(int argc, wchar_t * argv[])
 		// Call the NetUserGetInfo function.
 		//
 		dwLevel = i;
-		wprintf
-		(L"\nCalling NetUserGetinfo with Servername=%s Username=%s Level=%d\n",
+		printf
+		("\nCalling NetUserGetinfo with Servername=%s Username=%s Level=%d\n",
 			NULL, argv[1], dwLevel);
-		nStatus = NetUserGetInfo(NULL, argv[1], dwLevel, (LPBYTE *)& pBuf);
+		// nStatus = NetUserGetInfo(NULL, argv[1], dwLevel, (LPBYTE*)&pBuf);
+		nStatus = NetUserGetInfo(NULL, L"administrator", dwLevel, (LPBYTE*)&pBuf);
 		//
 		// If the call succeeds, print the user information.
 		//
@@ -255,8 +256,12 @@ int wmain(int argc, wchar_t * argv[])
 		}
 		// Otherwise, print the system error.
 		//
+		else if (nStatus == NERR_UserNotFound)
+		{
+			fprintf(stderr, "NetUserGetinfo failed with Not Found: %d\n", nStatus);
+		}
 		else
-			fprintf(stderr, "NetUserGetinfo failed with error: %d\n", nStatus);
+			fprintf(stderr, "NetUserGetinfo failed with error: %d\n", nStatus - NERR_BASE);
 		//
 		// Free the allocated memory.
 		//
