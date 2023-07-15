@@ -34,13 +34,15 @@ private:
     void showDatabase();
     void setStatus();
 private slots:
-    void on_pushButton_clicked();
+    void on_pushBtnOpen_clicked();
 
-    void on_pushButton_2_clicked();
+    void on_pushBtnClear_clicked();
 
 private:
     QString m_fileName;
     QString m_passWd;
+
+    QString  m_filePath;
 
     QSqlDatabase m_database;
 private:

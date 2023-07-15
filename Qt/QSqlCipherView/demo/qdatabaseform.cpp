@@ -5,6 +5,7 @@
 #pragma execution_character_set("utf-8")
 #endif
 
+#define QSQLCIPHER "qsqlcipher.dll"
 
 QDataBaseForm::QDataBaseForm(QWidget *parent) :
     QWidget(parent),
@@ -36,8 +37,8 @@ QDataBaseForm::QDataBaseForm(QWidget *parent) :
     else   {
         fbtn.open(QFile::ReadOnly | QFile::Text);
         QTextStream ts(&fbtn);
-        ui->pushButton->setStyleSheet(ts.readAll());
-        ui->pushButton_2->setStyleSheet(ts.readAll());
+        ui->pushBtnOpen->setStyleSheet(ts.readAll());
+        ui->pushBtnClear->setStyleSheet(ts.readAll());
     }
 
 
@@ -62,8 +63,9 @@ void QDataBaseForm::Init()
 
 bool QDataBaseForm::openMyDb(QString dbname, QString passWd)
 {
+    qDebug() << "[START OPEN]--------------------------" << QSqlDatabase::drivers();
     qDebug() << "[START OPEN]--------------------------" << dbname << passWd;
-    QSqlDatabase dbconn = QSqlDatabase::addDatabase("QSQLCIPHER", "OPENDB"); // QSQLITE QSQLCIPHER
+    QSqlDatabase dbconn = QSqlDatabase::addDatabase("SQLITECIPHER", "OPENDB"); // QSQLITE QSQLCIPHER
     dbconn.setDatabaseName(QString(dbname));
 
     qDebug() << QString("【Encode DB %1】").arg(dbname);
@@ -102,37 +104,38 @@ void QDataBaseForm::showDatabase()
             queryLoc.prepare(str);
             if (queryLoc.exec())
                 while (queryLoc.next())
-                    // "字段数:%1 字段名:%2 字段类型
                     head << queryLoc.value(1).toString();
             else
-                qDebug() << queryLoc.lastError();
+                QMessageBox::critical(this, QString("Error"), queryLoc.lastError().text(), QMessageBox::Ok);
 
             table->setColumnCount(head.count());
-            // table->setRowCount(1) ;
             table->setHorizontalHeaderLabels(head);
         }
 
-        queryLoc.exec(QString("select * from %1;").arg(Tables[i]));
+        queryLoc.prepare(QString("select * from %1;").arg(Tables[i]));
 
-        QStringList strItem;
         int row = 0;
-        while (queryLoc.next()) {
-            for(int count = 0; count < head.count(); count++)
-                strItem << queryLoc.value(count).toString();
+        if (queryLoc.exec())
+        {
+            while (queryLoc.next())
+            {
+                QStringList strItem;
 
-            table->insertRow(row);
-            for (int col = 0; col < strItem.length() && !strItem[col].isEmpty(); col++)
-                table->setItem(row,col,new QTableWidgetItem(strItem[col]));
+                strItem.clear();
 
-            // items[i]->setBackground(0,Qt::Dense7Pattern);
-            row++;
+                for (int count = 0; count < head.count(); count++)
+                    strItem << queryLoc.value(count).toString();
+
+                table->insertRow(row);
+                for (int col = 0; col < strItem.length() && !strItem[col].isEmpty(); col++)
+                    table->setItem(row, col, new QTableWidgetItem(strItem[col]));
+
+                row++;
+            }
         }
-
         ui->tabWidget->addTab(table,Tables[i]);
-
     }
 
-    // ui->tabWidget->setVisible(true);
     for(int i = 0; i < Tables.count(); i++)
     {
     }
@@ -147,15 +150,23 @@ void QDataBaseForm::setStatus()
     setWindowTitle(fileName);
 }
 
-void QDataBaseForm::on_pushButton_clicked()
+void QDataBaseForm::on_pushBtnOpen_clicked()
 {
 
     if(m_database.isOpen())
     {
         m_database.close();
     }
-    m_fileName = QFileDialog::getOpenFileName(this,
-                                              tr("Open Database File"), QDir::homePath(), tr("Image Files (*.db)"));
+    m_fileName = QFileDialog::getOpenFileName(
+        this,
+        tr("Open Database File"), 
+        m_filePath.isEmpty() ? QDir::homePath() : m_filePath, 
+        tr("Image Files (*.db)"));
+
+	if (m_fileName.isEmpty())
+		return;
+
+    m_filePath = QFileInfo(m_fileName).filePath();
 
     ui->label->setText(m_fileName);
 
@@ -164,11 +175,8 @@ void QDataBaseForm::on_pushButton_clicked()
                                      tr("密码："), QLineEdit::Normal,
                                      "Trust05051025", &ok);
 
-    if(!ok)
+    if(!ok || m_fileName.isEmpty())
         return;
-
-    if(m_passWd.isEmpty())
-        m_passWd = "Trust05051025";
 
     if( !openMyDb(m_fileName,m_passWd) )
     {
@@ -185,8 +193,7 @@ void QDataBaseForm::on_pushButton_clicked()
 }
 
 
-void QDataBaseForm::on_pushButton_2_clicked()
+void QDataBaseForm::on_pushBtnClear_clicked()
 {
     Init();
 }
-

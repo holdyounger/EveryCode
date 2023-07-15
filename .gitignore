@@ -86,3 +86,6 @@ deploy/
 *.pb.h
 *.pb.cc
 
+*.pdb
+Qt/QSqlCipher/sqlitecipher/.qmake.stash
+*.manifest
