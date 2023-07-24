@@ -1,7 +1,3 @@
-// GetChdFileByPath.cpp : 定义控制台应用程序的入口点。
-//
-
-#include "stdafx.h"
 #include <io.h>
 #include <iostream>
 #include <vector>
@@ -10,12 +6,13 @@
 #include <ShObjIdl.h>
 #include <cstring>
 #include <shlobj.h>
+#include <versionhelpers.h>
 using namespace std;
 
 #include <comutil.h>  
 #pragma comment(lib, "comsuppw.lib")
 
-wstring getLnkFormPath(wstring lnkPath)
+string getLnkFormPath(wstring lnkPath)
 {
 	cout << "getLnkFromPath:";
 	//wstring wstr2=UNICODE(lnkPath);
@@ -26,8 +23,8 @@ wstring getLnkFormPath(wstring lnkPath)
 	LPCOLESTR str = lnkPath.c_str();
 
 	// 初始化
-	wstring sRet;
-	wchar_t wRet[MAX_PATH];
+	string sRet;
+	char wRet[MAX_PATH];
 	WIN32_FIND_DATA  fd;
 
 	// 初始化 COM 库
@@ -75,7 +72,8 @@ wstring getLnkFormPath(wstring lnkPath)
 void getFiles(std::string path, std::vector<std::string>& files, std::vector<std::string>& names) 
 {
 	//文件句柄，win10用long long，win7用long就可以了
-	long hFile = 0;
+	long long hFile = 0;
+
 	//文件信息 
 	struct _finddata_t fileinfo; 
 	std::string p; 
@@ -118,7 +116,7 @@ wstring string2wstring(const string& s)
 	return result; 
 }
 
-int _tmain(int argc, _TCHAR* argv[])
+int main(int argc, char* argv[])
 {
 	string path = "C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs";
 	vector<string> files;
@@ -134,9 +132,9 @@ int _tmain(int argc, _TCHAR* argv[])
 		wsName = string2wstring(files[i]);	
 		cout << "lnkPath: " << files[i] << endl;
 
-		wstring wsDestPath = getLnkFormPath(wsName);
+		string wsDestPath = getLnkFormPath(wsName);
 		cout << "destPath:";
-		wcout << wsDestPath;
+		cout << wsDestPath;
 		cout << endl;
  	}
  	cout  << "-------------------\n";

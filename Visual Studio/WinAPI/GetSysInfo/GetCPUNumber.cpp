@@ -1,7 +1,4 @@
-// GetCPUNumber.cpp : 定义控制台应用程序的入口点。
-//
-
-#include "stdafx.h"
+#include "GetCPUNumber.h"
 #include <iostream>
 #include <Windows.h>
 using namespace std;
@@ -34,11 +31,11 @@ int get_cpu_info(uint16_t *user, uint16_t *nice, uint16_t *idle)
 	return 0;
 }
 
-int _tmain(int argc, _TCHAR* argv[])
+int GetCPUNumber()
 {
 	unsigned sz = core_count();
 	cout << "The Number of CPU is " << sz << '.' << endl;
 	system("pause");
-	return 0;
+	return (int)sz;
 }
 

@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <windows.h>
+#include <tchar.h>
 #include <atlstr.h>
 
 inline std::wstring GetTempDir()

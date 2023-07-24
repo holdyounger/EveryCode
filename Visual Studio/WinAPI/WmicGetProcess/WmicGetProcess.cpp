@@ -1,7 +1,6 @@
 // WmicGetProcess.cpp : 定义控制台应用程序的入口点。
 //
 
-#include "stdafx.h"
 #include <Windows.h>
 #include <tlhelp32.h>
 #include <iostream>
@@ -14,7 +13,7 @@ void getProcess()
 	return;
 	FILE *file;
 	fopen_s(&file,"G:\\allprocess.txt","a+");
-	TCHAR c[] = { L"cmd.exe" }; //定义字符串并初始化,c为8长度,最后结尾有'\0',定义一个字符为'x',
+	TCHAR c[] = { "cmd.exe" }; //定义字符串并初始化,c为8长度,最后结尾有'\0',定义一个字符为'x',
 	HANDLE handle; //定义CreateToolhelp32Snapshot系统快照句柄
 	HANDLE handle1; //定义要结束进程句柄
 
@@ -38,7 +37,7 @@ void getProcess()
 		fprintf(file, "%ls", info->szExeFile);
 
 		//strcmp字符串比较函数同要结束相同
-		if (wcscmp(c, info->szExeFile) == 0)
+		if (strcmp(c, info->szExeFile) == 0)
 		{
 			//MessageBox (NULL, info->szExeFile, TEXT ("HelloMsg"), 0);
 			//PROCESS_TERMINATE表示为结束操作打开,FALSE=可继承,info->th32ProcessID=进程ID
@@ -67,7 +66,7 @@ int getProcess2()
 	bool bMore = Process32First(hProcess, &currentProcess);	//获取第一个进程信息
 	while(bMore)
 	{
-		printf("PID=%5u    PName= %ls", currentProcess.th32ProcessID, &currentProcess.szExeFile);	//遍历进程快照，轮流显示每个进程信息
+		printf("PID=%5u    PName= %s", currentProcess.th32ProcessID, &currentProcess.szExeFile);	//遍历进程快照，轮流显示每个进程信息
 		cout << &currentProcess.szExeFile << endl;
 		bMore=Process32Next(hProcess, &currentProcess);	//遍历下一个
 		countProcess++;
@@ -79,7 +78,7 @@ int getProcess2()
 
 	return 0;
 }
-int _tmain(int argc, _TCHAR* argv[])
+int main(int argc, char* argv[])
 {
 	getProcess2();
 	return 0;

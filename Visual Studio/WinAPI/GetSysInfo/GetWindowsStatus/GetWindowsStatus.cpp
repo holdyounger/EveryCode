@@ -1,7 +1,3 @@
-// gitWindowsStatus.cpp : 定义控制台应用程序的入口点。
-//
-
-#include "stdafx.h"
 // GetWindowsStatus.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。
 //
 //  Sample output:
@@ -14,6 +10,7 @@
 //  There are 2084876 free  KB of virtual memory.
 //  There are       0 free  KB of extended memory.
 
+#include "GetWindowsStatus.h"
 #include <windows.h>
 #include <stdio.h>
 #include <tchar.h>
@@ -26,7 +23,7 @@
 // argument and uses it to pad and right justify the number.
 #define WIDTH 7
 
-void _tmain()
+void GetWindowsStatus()
 {
 	MEMORYSTATUSEX statex;
 
