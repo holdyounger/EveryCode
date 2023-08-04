@@ -1,25 +1,22 @@
-﻿// GetTempDir.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。
+﻿// ExpandEnvironmentStrings.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。
 //
-
-#include <iostream>
 #include <windows.h>
-#include <tchar.h>
-#include <atlstr.h>
+#include <iostream>
 
-inline std::wstring GetTempDir()
+
+int main(int argc, char *argv[])
 {
-	WCHAR strTmpDir[MAX_PATH] = { 0 };
-	GetTempPathW(MAX_PATH, strTmpDir);
-	CString szTempDir = CString(strTmpDir) + _T("TrustAgent") + "\\";
+    LPSTR dstlstr;
 
-	return szTempDir.GetString();
-}
+    dstlstr = (LPSTR)malloc(sizeof(LPSTR));
 
-int main()
-{
-    std::cout << "Hello World!\n";
-
-	std::wcout << GetTempDir();
+    for (int i = 1; i < argc; i++)
+    {
+        ExpandEnvironmentStringsA(argv[i], dstlstr, sizeof(argv[i]));
+        std::cout << "argv[i]: " << argv[i] << "\t" << "argv[i][expand]:" << dstlstr << std::endl;
+        memset(dstlstr, 0, sizeof(LPSTR));
+    }
+    
 }
 
 // 运行程序: Ctrl + F5 或调试 >“开始执行(不调试)”菜单
