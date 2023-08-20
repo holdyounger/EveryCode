@@ -1,8 +1,6 @@
 // GetDominName.cpp : 获取主机域名
 //
 
-#include "stdafx.h"
-
 #include <Windows.h>
 #include <DSRole.h>
 
