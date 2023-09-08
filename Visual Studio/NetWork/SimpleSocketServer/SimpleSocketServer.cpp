@@ -1,59 +1,56 @@
-// server.cpp : ¶¨Òå¿ØÖÆÌ¨Ó¦ÓÃ³ÌĞòµÄÈë¿Úµã¡£
-//
-
-#include "stdafx.h"
-#include <stdio.h>
+ï»¿#include <stdio.h>
 #include <vector>
 #include <stdlib.h>
 #include <iostream>
 #include <WinSock2.h>
-#pragma comment (lib, "ws2_32.lib") // ¼ÓÔØws32_32.dll
+#pragma comment (lib, "ws2_32.lib") // åŠ è½½ws32_32.dll
 using namespace std;
 
-int addPort(vector<SOCKET>& vecSock, int nPort) 
+int addPort(vector<SOCKET>& vecSock, int nPort)
 {
-	if(nPort < 0 || nPort > 0xFF)
+	if (nPort < 0 || nPort > 0xFF)
 	{
 		return -1;
 	}
 
-	// ³õÊ¼»¯ DLL
+	// åˆå§‹åŒ– DLL
 	WSADATA wsaData;
-	WSAStartup( MAKEWORD(2,2), &wsaData);
+	WSAStartup(MAKEWORD(2, 2), &wsaData);
 
-	// ´´½¨Ì×½Ó×Ö
-	SOCKET servSock = socket(PF_INET,SOCK_STREAM,IPPROTO_TCP);
+	// åˆ›å»ºå¥—æ¥å­—
+	SOCKET servSock = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
 
-	// °ó¶¨Ì×½Ó×Ö
+	// ç»‘å®šå¥—æ¥å­—
 	struct sockaddr_in sockAddr;
-	memset (&sockAddr, 0, sizeof(sockAddr)); // Ã¿¸öÌ×½Ó×Ö¶¼ÓÃ0Ìî³ä
-	sockAddr.sin_family = PF_INET; // Ê¹ÓÃIPv4µØÖ·
+	memset(&sockAddr, 0, sizeof(sockAddr)); // æ¯ä¸ªå¥—æ¥å­—éƒ½ç”¨0å¡«å……
+	sockAddr.sin_family = PF_INET; // ä½¿ç”¨IPv4åœ°å€
 	sockAddr.sin_addr.s_addr = inet_addr("127.0.0.1");
-	sockAddr.sin_port = htons(1234);	// ¶Ë¿Ú
+	sockAddr.sin_port = htons(1234);	// ç«¯å£
 	bind(servSock, (SOCKADDR*)&sockAddr, sizeof(SOCKADDR));
 
-	// ½øÈë¼àÌı×´Ì¬
-	listen(servSock,20);
+	// è¿›å…¥ç›‘å¬çŠ¶æ€
+	listen(servSock, 20);
 
-	// ½ÓÊÕ¿Í»§¶ËÇëÇó
+	// æ¥æ”¶å®¢æˆ·ç«¯è¯·æ±‚
 	SOCKADDR clntAddr;
 	int nSize = sizeof(SOCKADDR);
 	SOCKET clntSock = accept(servSock, (SOCKADDR*)&clntAddr, &nSize);
 	vecSock.push_back(clntSock);
 	vecSock.push_back(servSock);
-	
+
 	return 0;
 }
 
-int _tmain(int argc, _TCHAR* argv[])
+int main(int argc, char* argv[])
 {
+	std::cout << "Hello World!\n";
 
 	vector<SOCKET> vecSock;
 ADD:
 	int nComd = 2;
 	int nPort = -1;
 	int nRet = -1;
-	printf("SERVER \t ÇëÊäÈë¶Ë¿ÚºÅ£¬Èç¹ûÊÇ-1ÔòÍË³ö±¾³ÌĞò£º\n");
+	printf("SERVER \t è¯·è¾“å…¥ç«¯å£å·ï¼Œå¦‚æœæ˜¯-1åˆ™é€€å‡ºæœ¬ç¨‹åºï¼š\n");
 	scanf_s("%d", &nPort);
 
 	switch (nPort)
@@ -62,7 +59,7 @@ ADD:
 		goto END;
 		break;
 	default:
-		if( 0 != addPort(vecSock, nPort) )
+		if (0 != addPort(vecSock, nPort))
 		{
 			printf("Add this Port(%d)\n", nPort, GetLastError());
 		}
@@ -73,18 +70,17 @@ ADD:
 END:
 	for (int i = 0; i < vecSock.size(); i++)
 	{
-		if(NULL != vecSock[i])
+		if (NULL != vecSock[i])
 		{
-			// ¹Ø±ÕÌ×½Ó×Ö
+			// å…³é—­å¥—æ¥å­—
 			closesocket(vecSock[i]);
 			closesocket(vecSock[i]);
 		}
 	}
 
-	// ÖÕÖ¹Ê¹ÓÃ DLL
+	// ç»ˆæ­¢ä½¿ç”¨ DLL
 	WSACleanup();
 
 	return 0;
 	return 0;
 }
-
