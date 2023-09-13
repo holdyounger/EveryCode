@@ -21,6 +21,8 @@ int main(int argc, const char* argv[])
 
 	InitPipe();
 
+	g_pWriteTAInst->WriteData("Test shimingming 2023Äê9ÔÂ8ÈÕ15:21:04");
+
 	return 0;
 }
 
@@ -42,20 +44,20 @@ void InitPipe()
 		}
 	};
 
-	InitReadPipe(g_pReadTAInst, PIPE_TAINS_SERVER_NAME);
-	InitReadPipe(g_pReadSct, PIPE_SCAUP_SERVER_NAME);
+	// InitReadPipe(g_pReadTAInst, PIPE_TAINS_SERVER_NAME);
+	// InitReadPipe(g_pReadSct, PIPE_SCAUP_SERVER_NAME);
 
 
 	if (NULL == g_pWriteTAInst)
 	{
-		g_pWriteTAInst = new PipeIPC(PipeIPC::CLIENT, PIPE_TAINS_CLIENT_NAME);
+		g_pWriteTAInst = new PipeIPC(PipeIPC::CLIENT, PIPE_SCAUP_SERVER_NAME);
 		g_pWriteTAInst->InitPipeIPC();
 	}
-	if (NULL == g_pWriteSct)
-	{
-		g_pWriteSct = new PipeIPC(PipeIPC::CLIENT, PIPE_SCAUP_CLIENT_NAME);
-		g_pWriteSct->InitPipeIPC();
-	}
+// 	if (NULL == g_pWriteSct)
+// 	{
+// 		g_pWriteSct = new PipeIPC(PipeIPC::CLIENT, PIPE_SCAUP_CLIENT_NAME);
+// 		g_pWriteSct->InitPipeIPC();
+// 	}
 }
 
 bool StartPipeRead(PipeIPC* pipe)
